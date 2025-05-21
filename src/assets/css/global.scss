@@ -1,0 +1,12 @@
+@use "sass:color";
+
+// F7A600
+$primary-color: hsl(40, 100%, 48%);
+$semi-transparent-primary-color: hsl(38, 100%, 94%);
+
+$input-height: 36px;
+
+$sidebar-width: 200px;
+
+$button-hover-color: color.adjust($primary-color, $lightness: -9.7%);
+$button-active-color: color.adjust($primary-color, $lightness: -22.8%);
