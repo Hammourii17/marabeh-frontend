@@ -2,8 +2,8 @@
 import axios from 'axios'
 // import VueNativeSock from "vue-native-websocket-vue3";
 // import i18n from "~/locales/index";
-import http from '~/plugins/http'
-import localConfig from '~/local_config'
+import http from './http.js'
+import localConfig from '../local_config.js'
 // import store from "~/store/index";
 // import vClickOutside from "click-outside-vue3";
 // import NumericDirective from "~/directives/numeric";

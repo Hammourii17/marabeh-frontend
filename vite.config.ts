@@ -1,20 +1,27 @@
 import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
-// @ts-ignore
-import path from "path"
-import localConfig from "./src/local_config"
+import { fileURLToPath, URL } from "node:url"
+
 export default defineConfig({
   plugins: [vue()],
-  publicDir: path.resolve(__dirname, "./src/static"),
+  publicDir: "public",
   base: `/`,
   server: {
     host: "0.0.0.0",
     port: 3000,
+    proxy: {
+      '/api/v1': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api\/v1/, '/api/v1'),
+      },
+    },
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "~": path.resolve(__dirname, "./src"),
+      "@": fileURLToPath(new URL('./src', import.meta.url)),
+      "~": fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   build: {
@@ -23,7 +30,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@/assets/css/global.scss";`,
+        additionalData: `@import "./src/assets/css/global.scss";`,
       },
     },
   },

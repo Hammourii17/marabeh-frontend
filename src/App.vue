@@ -13,9 +13,9 @@
 
 <script setup>
   import { NMessageProvider, NNotificationProvider, NConfigProvider } from 'naive-ui'
-  import ModalRoot from '@/components/modal/ModalRoot.vue'
-  import { themeOverrides } from '@/plugins/naive-ui'
-  import BaseLayoutWrapper from '@/components/base/BaseLayoutWrapper.vue'
+  import ModalRoot from './components/modal/ModalRoot.vue'
+  import { themeOverrides } from './plugins/naive-ui.js'
+  import BaseLayoutWrapper from './components/base/BaseLayoutWrapper.vue'
 
   const customTheme = themeOverrides
 </script>

@@ -137,11 +137,16 @@
               isLoading.value = true
               const token = await getRecaptchaToken('login')
 
-              const response = await $http.post('token/', {
+              const payload = {
                 email: formValue.value.username,
+                username: formValue.value.username,
                 password: formValue.value.password,
-                recaptcha_token: token,
-              })
+              }
+              if (token) {
+                payload.recaptcha_token = token
+              }
+
+              const response = await $http.post('token/', payload)
               await mainStore.login(response)
 
               mainStore.getBallance()

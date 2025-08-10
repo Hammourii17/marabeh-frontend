@@ -87,7 +87,7 @@
 </template>
 <script setup>
   import { useRouter, useRoute } from 'vue-router'
-  import { useMainStore } from '@/stores/main'
+  import { useMainStore } from '../stores/main.js'
   import { storeToRefs } from 'pinia'
   import { useNotification } from 'naive-ui'
 

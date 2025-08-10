@@ -120,9 +120,8 @@
 </template>
 
 <script setup>
-  import { computed, onMounted, ref } from 'vue'
-  import TInput from '@/components/ui/TInput.vue'
-  import { useMainStore } from '~/stores/main'
+  import { onMounted, ref } from 'vue'
+  import { useMainStore } from '../stores/main.js'
   import moment from 'moment'
 
   const mainStore = useMainStore()

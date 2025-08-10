@@ -1,7 +1,8 @@
+const apiBaseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1/'
+
 const localConfig = {
   api: {
-    // baseURL: "https://vma4yd-stage.rakamicrowdfunding.com/api/v1/",
-    baseURL: 'https://vma4yd-dev.rakamicrowdfunding.com/api/v1/',
+    baseURL: apiBaseURL,
   },
 
   // recaptchaSiteKey: '6LdIIcAqAAAAAGyd4XSn5VN5H8a9YA7USV-Cs-Kf',

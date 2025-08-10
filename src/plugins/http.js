@@ -1,7 +1,7 @@
 import axios from 'axios'
-import config from '~/local_config'
-import { useMainStore } from '~/stores/main.js'
-import { useNotifications } from '@/composables/useNotifications'
+import config from '../local_config.js'
+import { useMainStore } from '../stores/main.js'
+import { useNotifications } from '../composables/useNotifications.js'
 
 export default (app) => {
   const mainStore = useMainStore()
@@ -22,7 +22,9 @@ export default (app) => {
     }
   })
 
-  const noAuthRequireApis = ['/token/'].map((uri) => config.api.baseURL + uri)
+  // Endpoints that must NOT include Authorization header
+  // Compare against axios config.url which is the relative path passed to $http
+  const noAuthRequireApis = ['token/', 'token/refresh/']
 
   let isRefreshing = false
   let failedQueue = []
@@ -35,6 +37,7 @@ export default (app) => {
   app.config.globalProperties.$http.interceptors.request.use(
     async function (config) {
       config.headers['X-API-LANG'] = localStorage.getItem('lang') || 'en'
+      config.headers['X-Requested-With'] = 'XMLHttpRequest'
       let token = localStorage.getItem('token')
 
       if (!noAuthRequireApis.includes(config.url) && token) {
@@ -119,12 +122,15 @@ export default (app) => {
       (error.response?.status !== 401 ||
         error.response?.data?.detail === 'No active account found with the given credentials')
     ) {
+      const body = error.response?.data
+      const detail =
+        body?.message || body?.detail || body?.error || body?.errors || body?.non_field_errors
       notification.create({
         type: 'error',
         title: 'Request failed with status ' + error.response?.status,
-        duration: 4000,
+        duration: 5000,
         max: 3,
-        content: `${error.response?.data?.message || 'Something went wrong'}`,
+        content: `${typeof detail === 'string' ? detail : JSON.stringify(detail) || 'Something went wrong'}`,
       })
     }
   }

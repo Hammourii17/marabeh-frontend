@@ -2,9 +2,11 @@ import { load } from 'recaptcha-v3'
 import localConfig from '@/local_config'
 
 export const useGoogleRecaptcha = () => {
+  const isEnabled = (import.meta.env.VITE_ENABLE_RECAPTCHA ?? 'true') !== 'false'
   let recaptcha = null
 
   const loadRecaptcha = async () => {
+    if (!isEnabled) return
     recaptcha = await load(localConfig.recaptchaSiteKey, {
       autoHideBadge: false,
       useRecaptchaNet: true,
@@ -13,6 +15,7 @@ export const useGoogleRecaptcha = () => {
 
   const getRecaptchaToken = async (action) => {
     try {
+      if (!isEnabled) return null
       if (!recaptcha) {
         await loadRecaptcha()
       }

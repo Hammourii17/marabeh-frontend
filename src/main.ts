@@ -4,12 +4,13 @@ import './assets/css/index.scss'
 import { createPinia } from 'pinia'
 import { createI18n } from 'vue-i18n'
 import { messages } from './utils/locales'
-import useModals from '@/components/modal/modal'
+import useModals from './components/modal/modal.js'
+import { useNotifications } from './composables/useNotifications.js'
 
 // @ts-ignore
-import initPlugins from '~/plugins/index'
+import initPlugins from './plugins/index.js'
 // @ts-ignore
-import { router } from '~/router'
+import { router } from './router/index'
 
 const pinia = createPinia()
 
@@ -26,7 +27,7 @@ app.use(router)
 app.use(initPlugins)
 
 app.config.globalProperties.$notify = (n: any) => {
-  useNotifications.show({ type: n.type, title: n.title, description: n.text })
+  useNotifications().notification.create({ type: n.type, title: n.title, description: n.text })
 }
 
 app.config.globalProperties.$modal = {
@@ -43,7 +44,7 @@ app.config.globalProperties.$modal = {
   },
 }
 
-app.config.globalProperties.$i18n = i18n
+app.config.globalProperties.$i18n = i18n as any
 
 await router.isReady()
 
